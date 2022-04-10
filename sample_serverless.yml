@@ -1,0 +1,21 @@
+org: cdpadilla42
+app: spotify-weekly-playlist-serverless
+service: spotify-weekly-playlist-serverless
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.7
+  environment:
+    SPOTIPY_CLIENT_ID: Your spotify id
+    SPOTIPY_CLIENT_SECRET: Client secret
+    SPOTIPY_REDIRECT_URI: Your redirect url
+functions:
+  cronHandler:
+    handler: handler.run
+    events:
+      # Invoke Lambda function every 2nd minute from Mon-Fri
+      - schedule: cron(00 12 ? * SUN *)
+plugins:
+  - serverless-python-requirements
