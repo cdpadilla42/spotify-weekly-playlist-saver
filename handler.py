@@ -48,18 +48,10 @@ class Spotify_Weekly_Playlists_Handler:
   def get_weekly_playlist_tracks(self):
     track_uris = list()
     try:
-      # Spotify creates the playlist when accessed, not automatically at a given time.
-      # Here we're going to see if spotipy gets the old or new version of the playlist when running.
-      initial_results = self.sp.playlist('37i9dQZEVXcMu9M1MdIExB')
-      time.sleep(5)
       self.discover_weekly_playlists =  self.sp.playlist('37i9dQZEVXcMu9M1MdIExB')
-      
-      logger.info("Initial results: ")
-      logger.info("{}".format(' '.join(map(str, initial_results.get('tracks', {}).get('items', [])))))
-      logger.info("Following results: ")
-      logger.info("{}".format(' '.join(map(str, self.discover_weekly_playlists.get('tracks', {}).get('items', [])))))
 
       self.discover_weekly_tracks = self.discover_weekly_playlists.get('tracks', {}).get('items', [])
+      
       for track in self.discover_weekly_tracks:
         current_uri = track['track']['uri']
         track_uris.append(current_uri)
